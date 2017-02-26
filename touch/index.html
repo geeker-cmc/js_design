@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>touch</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1" / >
+	<style>
+		html,body{
+			height:100%;
+			margin:0;
+			overflow: hidden;
+		}
+
+	</style>
+</head>
+<body>
+	<canvas id="cvs" width="320" height="568" style="background:#eee"></canvas>
+</body>
+<script>
+	var start_pos,
+	end_pos,
+	start_time,
+	swipe_dis=30,
+	swipe_time=300,
+	cvs=document.querySelector('#cvs'),
+	ctx=cvs.getContext('2d');
+	"touchstart touchmove touchend".split(" ").forEach(function(etype){
+		cvs.addEventListener(etype,function(e){
+			switch(e.type){
+			case "touchstart":
+			start_time=Date.now();
+			drawStart(e)
+			break;
+			case "touchmove":
+			drawMove(e)
+			break;
+			case "touchend":
+			drawEnd(e)
+			break;
+			default:
+		}
+		})
+	},false)
+	function drawStart(e){
+		ctx.fillStyle="red";
+		ctx.beginPath();
+		ctx.arc(e.touches[0].clientX,e.touches[0].clientY,10,0,2*Math.PI,true);
+		ctx.fill();
+		ctx.beginPath()
+		ctx.strokeStyle="green";
+		ctx.moveTo(e.touches[0].clientX,e.touches[0].clientY)
+	}
+	function drawMove(e){
+		ctx.lineTo(e.touches[0].clientX,e.touches[0].clientY);
+		ctx.stroke();
+			}
+	function drawEnd(e){
+		ctx.clearRect(0,0,e.target.width,e.target.height)
+	}
+</script>
+</html>
