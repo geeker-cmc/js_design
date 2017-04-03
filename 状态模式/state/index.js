@@ -23,6 +23,7 @@ var Light=function(){
 	this.offLightState=new OffLightState(this);
 	this.weakLightState=new WeakLightState(this);
 	this.strongLightState=new StrongLightState(this);
+	this.superStrongLightState=new SuperStrongLightState(this);
 	this.button=null;
 }
 Light.prototype.init=function(){
@@ -40,3 +41,10 @@ Light.prototype.setState=function(newState){
 }
 var light=new Light();
 light.init();
+var SuperStrongLightState=function(light){
+	this.light=light;
+}
+SuperStrongLightState.prototype.buttonWasPressed=function(){
+	console.log('关灯');
+	this.light.setState(this.light.offLightState);
+}
